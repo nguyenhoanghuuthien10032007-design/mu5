@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manchester United - Lịch sử và Đội hình</title>
+    <style>
+        /* CSS cho giao diện */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .header {
+            background-color: #DA291C; /* Đỏ MU */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .nav {
+            background-color: #000;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        .nav a:hover {
+            background-color: #555;
+            color: white;
+        }
+        section {
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+        }
+        h2 {
+            color: #DA291C;
+            border-bottom: 2px solid #DA291C;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+        .player-card, .legend-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px;
+            display: inline-block;
+            width: 150px;
+            text-align: center;
+            vertical-align: top;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .player-card img, .legend-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .squad-diagram {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            border: 1px dashed #DA291C;
+            margin-top: 15px;
+            position: relative;
+            min-height: 350px; /* Sân cỏ */
+            background: linear-gradient(to bottom, #4CAF50, #8BC34A);
+            border-radius: 10px;
+        }
+        .field-line {
+            border: 2px solid white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 80%;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        .center-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .player-dot {
+            width: 45px;
+            height: 45px;
+            background-color: #00008B; /* Xanh navy */
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8em;
+            position: absolute;
+            font-weight: bold;
+            border: 2px solid gold;
+            transition: transform 0.2s;
+        }
+        .player-dot:hover {
+            transform: scale(1.1);
+            background-color: #DA291C;
+        }
+        .player-info {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 3px solid #DA291C;
+            z-index: 100;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            border-radius: 10px;
+        }
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .squad-selector button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            background-color: #000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .squad-selector button.active {
+            background-color: #DA291C;
+        }
+
+        /* Mục Bán hàng */
+        .store-item {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin: 10px;
+            width: 200px;
+            display: inline-block;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+        }
+        .store-item img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .store-item button {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .store-category {
+            margin-top: 20px;
+            border: 1px solid #DA291C;
+            padding: 15px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/1200px-Manchester_United_FC_crest.svg.png" alt="MU Logo" style="height: 50px; vertical-align: middle; margin-right: 10px;"> MANCHESTER UNITED</h1>
+        <p>Glory Glory Man United!</p>
+    </div>
+
+    <div class="nav">
+        <a href="#history">Lịch sử</a>
+        <a href="#titles">Danh hiệu</a>
+        <a href="#legends">Ngôi đền huyền thoại</a>
+        <a href="#squads">Đội hình</a>
+        <a href="#transfers">Chuyển nhượng & Fan</a>
+        <a href="#store">Mục bán hàng</a>
+    </div>
+
+    <div class="container">
+        <section id="history">
+            <h2>📜 Lịch sử hình thành</h2>
+            <p><strong>Manchester United Football Club</strong> được thành lập vào năm **1878** với tên gọi ban đầu là **Newton Heath LYR Football Club**. Đổi tên thành Manchester United vào năm **1902**. Câu lạc bộ đã trải qua nhiều giai đoạn huy hoàng, đặc biệt dưới thời các huấn luyện viên huyền thoại như **Sir Matt Busby** và **Sir Alex Ferguson**.</p>
+            <p><strong>Huấn luyện viên nổi bật:</strong></p>
+            <ul>
+                <li><strong>Sir Alex Ferguson (1986–2013):</strong> Huấn luyện viên vĩ đại nhất lịch sử MU và bóng đá Anh, giành được 38 danh hiệu lớn, bao gồm 13 Premier League và 2 Champions League.</li>
+                <li><strong>Sir Matt Busby (1945–1969, 1970–1971):</strong> Xây dựng đội hình "Busby Babes" huyền thoại và là người Anh đầu tiên vô địch Cúp C1 (năm 1968).</li>
+            </ul>
+        </section>
+
+        <section id="titles">
+            <h2>🏆 Danh hiệu & Thành tích</h2>
+            <p>Manchester United là một trong những câu lạc bộ thành công nhất lịch sử bóng đá Anh.</p>
+            <ul>
+                <li><strong>Vô địch Quốc gia (Premier League/First Division):</strong> **20** lần (Kỷ lục)</li>
+                <li><strong>UEFA Champions League/European Cup:</strong> **3** lần (1968, 1999, 2008)</li>
+                <li><strong>FA Cup:</strong> **12** lần</li>
+                <li><strong>EFL Cup (League Cup):</strong> **6** lần</li>
+                <li><strong>UEFA Europa League:</strong> **1** lần (2017)</li>
+                <li><strong>FIFA Club World Cup:</strong> **1** lần (2008)</li>
+            </ul>
+        </section>
+        
+        <section id="legends">
+            <h2>👑 Ngôi đền huyền thoại (Hall of Fame)</h2>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+                <div class="legend-card">
+                    <img src="https://images2.thanhnien.vn/528068263637045248/2023/10/21/sir-bobby-charlton--1697903238858106380458.png" alt="Bobby Charlton">
+                    <p><strong>Sir Bobby Charlton</strong></p>
+                    <small>Tiền vệ huyền thoại, Vô địch WC & Ballon d'Or.</small>
+                </div>
+                <div class="legend-card">
+                    <img src="https://cdn.artphotolimited.com/images/5f60bc53bd40b8173f11e855/1000x1000/george-best-manchester-united-1972.jpg" alt="George Best">
+                    <p><strong>George Best</strong></p>
+                    <small>Phù thủy cánh, Ballon d'Or 1968.</small>
+                </div>
+                <div class="legend-card">
+                    <img src="https://www.elleman.vn/wp-content/uploads/2018/11/25/Ryan-Giggs-ELLE-Man-4.jpg" alt="Ryan Giggs">
+                    <p><strong>Ryan Giggs</strong></p>
+                    <small>Cầu thủ ra sân nhiều nhất, 13 PL.</small>
+                </div>
+                <div class="legend-card">
+                    <img src="https://image.plo.vn/w1000/Uploaded/2025/vrwqzdjwp/2019_06_20/paul-scholes_UYEF.jpg.webp" alt="Paul Scholes">
+                    <p><strong>Paul Scholes</strong></p>
+                    <small>Tiền vệ kiến tạo vĩ đại.</small>
+                </div>
+                <div class="legend-card">
+                    <img src="https://cdn-i.vtcnews.vn/files/f2/2014/05/27/nhin-lai-tran-chung-ket-champions-league-dang-nho-man-utd---bayern-20.jpg" alt="David Beckham">
+                    <p><strong>David Beckham</strong></p>
+                    <small>Chuyên gia sút phạt, Class 92.</small>
+                </div>
+                <div class="legend-card">
+                    <img src="https://photo.znews.vn/w660/Uploaded/ofh_huqfztmf/2019_03_13/1_1.jpg" alt="Cristiano Ronaldo">
+                    <p><strong>Cristiano Ronaldo</strong></p>
+                    <small>Quả bóng Vàng 2008.</small>
+                </div>
+                 <div class="legend-card">
+                    <img src="https://file.qdnd.vn/data/images/0/2017/07/10/ngocchungtv/kn3.jpg?w=578" alt="Wayne Rooney">
+                    <p><strong>Wayne Rooney</strong></p>
+                    <small>Ghi bàn kỷ lục của CLB.</small>
+                </div>
+                <div class="legend-card">
+                    <img src="https://editorial.uefa.com/resources/0253-0d7f0c94a6f2-153711d62ece-1000/peter_schmeichel_holds_the_uefa_champions_league_trophy_after_the_1999_final.jpeg" alt="Peter Schmeichel">
+                    <p><strong>Peter Schmeichel</strong></p>
+                    <small>Thủ môn huyền thoại, Vô địch Treble.</small>
+                </div>
+            </div>
+        </section>
+
+        <section id="squads">
+            <h2>⚽ Sơ đồ Đội hình & Thông tin chi tiết</h2>
+
+            <div class="squad-selector">
+                <button id="btn-2008" class="active">Đội hình 2008 (4-4-2)</button>
+                <button id="btn-current">Đội hình Hiện tại (4-2-3-1)</button>
+            </div>
+
+            <div class="squad-diagram" id="squad-display">
+                <div class="field-line"></div>
+                <div class="center-circle"></div>
+                </div>
+
+            <div id="player-detail" class="player-info">
+                <span class="close-btn" onclick="hidePlayerInfo()">&times;</span>
+                <h3>Chi tiết Cầu thủ</h3>
+                <p><strong>Tên:</strong> <span id="info-name"></span></p>
+                <p><strong>Vị trí:</strong> <span id="info-pos"></span></p>
+                <p><strong>Mùa giải:</strong> <span id="info-season"></span></p>
+                <p><strong>Thành tích:</strong> <span id="info-achieve"></span></p>
+            </div>
+        </section>
+
+        <section id="transfers">
+            <h2>💰 Chuyển nhượng, Danh hiệu cá nhân & Lượng Fan</h2>
+            
+            <h3>Danh hiệu Cá nhân nổi bật</h3>
+            <ul>
+                <li><strong>Quả bóng Vàng (Ballon d'Or):</strong> Denis Law (1964), Bobby Charlton (1968), George Best (1968), Cristiano Ronaldo (2008).</li>
+                <li><strong>Cầu thủ xuất sắc nhất năm của PFA:</strong> Ryan Giggs, Wayne Rooney, Robin van Persie, Bruno Fernandes, v.v.</li>
+            </ul>
+
+            <h3>Chuyển nhượng Cầu thủ (Ví dụ)</h3>
+            <p>MU nổi tiếng với các bản hợp đồng bom tấn và việc phát triển cầu thủ trẻ:</p>
+            <ul>
+                <li><strong>Chuyển nhượng Kỷ lục Đến:</strong> Paul Pogba (2016) - 89 triệu Bảng, Antony (2022) - 86 triệu Bảng, Harry Maguire (2019) - 80 triệu Bảng.</li>
+                <li><strong>Chuyển nhượng Kỷ lục Đi:</strong> Cristiano Ronaldo (2009) - 80 triệu Bảng (sang Real Madrid).</li>
+            </ul>
+
+            <h3>Lượng Fan hâm mộ</h3>
+            <p>Manchester United là một trong những đội bóng có lượng fan lớn nhất toàn cầu. Ước tính có **hơn 1.1 tỷ** người theo dõi và hâm mộ trên khắp thế giới, là đội bóng được yêu thích nhất ở nhiều khu vực như Châu Á.</p>
+        </section>
+
+        <section id="store">
+            <h2>🛍️ Cửa hàng Manchester United (Store)</h2>
+            <p>Chia ra các mục khác nhau để dễ dàng tìm kiếm.</p>
+
+            <div class="store-category">
+                <h3>Áo đấu & Trang phục thi đấu</h3>
+                <div style="display: flex; flex-wrap: wrap;">
+                    <div class="store-item">
+                        <img src="https://product.hstatic.net/200000293662/product/222881dffa4e4e10175f6_e9dbdcde56214e2990a3d7e215d090f8.jpg" alt="Áo đấu sân nhà 2024">
+                        <p><strong>Áo đấu Sân nhà 2025</strong></p>
+                        <p>Giá: 2,500,000 VND</p>
+                        <button>Mua ngay</button>
+                    </div>
+                    <div class="store-item">
+                        <img src="https://assets.adidas.com/images/w_600,f_auto,q_auto/a5fbf0d5e56942af857172ed8753f34c_9366/Ao_djau_san_khach_Manchester_United_mua_giai_25-26_chinh_hang_trang_JI7424_HM1.jpg" alt="Áo đấu sân khách 2024">
+                        <p><strong>Áo đấu Sân khách 2025</strong></p>
+                        <p>Giá: 2,500,000 VND</p>
+                        <button>Mua ngay</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="store-category">
+                <h3>Phụ kiện & Quà lưu niệm</h3>
+                <div style="display: flex; flex-wrap: wrap;">
+                    <div class="store-item">
+                        <img src="https://salt.tikicdn.com/ts/product/41/28/10/68034b8aba3add7eb1a005dc121ade4f.JPG" alt="Móc khóa MU">
+                        <p><strong>Móc khóa Logo MU</strong></p>
+                        <p>Giá: 150,000 VND</p>
+                        <button>Mua ngay</button>
+                    </div>
+                    <div class="store-item">
+                        <img src="https://sneakerdaily.vn/wp-content/uploads/2023/03/lego-old-trafford-manchester-united-14.png" alt="Mô hình Old Trafford">
+                        <p><strong>Mô hình Sân Old Trafford</strong></p>
+                        <p>Giá: 800,000 VND</p>
+                        <button>Mua ngay</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Dữ liệu cầu thủ
+        const squad2008 = [
+            // Sơ đồ 4-4-2
+            // Thủ môn
+            { name: "Van der Sar", pos: "Thủ môn", season: "2007/08", achieve: "Vô địch Champions League, PL", top: "90%", left: "50%" },
+            // Hậu vệ
+            { name: "Brown", pos: "RB", season: "2007/08", achieve: "Đá chính Chung kết CL", top: "75%", left: "10%" },
+            { name: "Ferdinand", pos: "CB", season: "2007/08", achieve: "Đội trưởng", top: "75%", left: "35%" },
+            { name: "Vidic", pos: "CB", season: "2007/08", achieve: "Hậu vệ xuất sắc", top: "75%", left: "65%" },
+            { name: "Evra", pos: "LB", season: "2007/08", achieve: "Hậu vệ trái hàng đầu", top: "75%", left: "90%" },
+            // Tiền vệ
+            { name: "Ronaldo", pos: "RM", season: "2007/08", achieve: "Vua phá lưới, QBV 2008", top: "50%", left: "10%" },
+            { name: "Carrick", pos: "CM", season: "2007/08", achieve: "Tiền vệ trụ cột", top: "50%", left: "35%" },
+            { name: "Scholes", pos: "CM", season: "2007/08", achieve: "Kiến tạo lỗi lạc", top: "50%", left: "65%" },
+            { name: "Giggs", pos: "LM", season: "2007/08", achieve: "Cầu thủ ra sân nhiều nhất", top: "50%", left: "90%" },
+            // Tiền đạo
+            { name: "Rooney", pos: "ST", season: "2007/08", achieve: "Sát thủ vòng cấm", top: "25%", left: "35%" },
+            { name: "Tevez", pos: "ST", season: "2007/08", achieve: "Đối tác ăn ý", top: "25%", left: "65%" },
+        ];
+
+        const squadCurrent = [
+            // Sơ đồ 4-2-3-1
+            // Thủ môn
+            { name: "Onana", pos: "Thủ môn", season: "Hiện tại", achieve: "Thủ môn chính", top: "90%", left: "50%" },
+            // Hậu vệ
+            { name: "Dalot", pos: "RB", season: "Hiện tại", achieve: "Hậu vệ cánh đa năng", top: "75%", left: "10%" },
+            { name: "Varane", pos: "CB", season: "Hiện tại", achieve: "Trung vệ kinh nghiệm", top: "75%", left: "35%" },
+            { name: "Martinez", pos: "CB", season: "Hiện tại", achieve: "Trung vệ thép", top: "75%", left: "65%" },
+            { name: "Shaw", pos: "LB", season: "Hiện tại", achieve: "Hậu vệ trái hàng đầu", top: "75%", left: "90%" },
+            // Tiền vệ phòng ngự
+            { name: "Casemiro", pos: "DM", season: "Hiện tại", achieve: "Máy quét", top: "55%", left: "35%" },
+            { name: "Mainoo", pos: "DM", season: "Hiện tại", achieve: "Tài năng trẻ", top: "55%", left: "65%" },
+            // Tiền vệ tấn công
+            { name: "Antony", pos: "RW", season: "Hiện tại", achieve: "Chạy cánh phải", top: "35%", left: "10%" },
+            { name: "Bruno", pos: "CAM", season: "Hiện tại", achieve: "Đội trưởng, nhạc trưởng", top: "35%", left: "50%" },
+            { name: "Garnacho", pos: "LW", season: "Hiện tại", achieve: "Chạy cánh trái tốc độ", top: "35%", left: "90%" },
+            // Tiền đạo
+            { name: "Højlund", pos: "ST", season: "Hiện tại", achieve: "Tiền đạo cắm", top: "15%", left: "50%" },
+        ];
+
+        const squadDisplay = document.getElementById('squad-display');
+        const btn2008 = document.getElementById('btn-2008');
+        const btnCurrent = document.getElementById('btn-current');
+        const playerDetail = document.getElementById('player-detail');
+
+        // Hàm hiển thị sơ đồ đội hình
+        function displaySquad(squad, season) {
+            squadDisplay.innerHTML = `
+                <div class="field-line"></div>
+                <div class="center-circle"></div>
+            `; // Xóa sơ đồ cũ và giữ lại sân cỏ
+
+            squad.forEach(player => {
+                const playerDot = document.createElement('div');
+                playerDot.className = 'player-dot';
+                playerDot.style.top = player.top;
+                playerDot.style.left = player.left;
+                playerDot.textContent = player.name.split(' ')[0]; // Chỉ hiển thị tên chính
+                
+                // Thêm sự kiện click để hiển thị chi tiết
+                playerDot.addEventListener('click', () => showPlayerInfo(player, season));
+                
+                squadDisplay.appendChild(playerDot);
+            });
+        }
+
+        // Hàm hiển thị chi tiết cầu thủ
+        function showPlayerInfo(player, season) {
+            document.getElementById('info-name').textContent = player.name;
+            document.getElementById('info-pos').textContent = player.pos;
+            document.getElementById('info-season').textContent = season;
+            document.getElementById('info-achieve').textContent = player.achieve;
+            playerDetail.style.display = 'block';
+        }
+
+        // Hàm ẩn chi tiết cầu thủ
+        function hidePlayerInfo() {
+            playerDetail.style.display = 'none';
+        }
+
+        // Xử lý sự kiện khi click nút
+        btn2008.addEventListener('click', () => {
+            displaySquad(squad2008, "Đội hình Treble 2008");
+            btn2008.classList.add('active');
+            btnCurrent.classList.remove('active');
+        });
+
+        btnCurrent.addEventListener('click', () => {
+            displaySquad(squadCurrent, "Đội hình Hiện tại");
+            btnCurrent.classList.add('active');
+            btn2008.classList.remove('active');
+        });
+
+        // Tải đội hình mặc định khi trang load
+        document.addEventListener('DOMContentLoaded', () => {
+            displaySquad(squad2008, "Đội hình Treble 2008");
+        });
+    </script>
+</body>
+</html>
